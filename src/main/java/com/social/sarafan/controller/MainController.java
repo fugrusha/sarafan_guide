@@ -3,6 +3,7 @@ package com.social.sarafan.controller;
 import com.social.sarafan.domain.User;
 import com.social.sarafan.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,8 @@ public class MainController {
         this.messageRepository = messageRepository;
     }
 
+    @Value("${spring.profiles.active}")
+    private String profile;
 
     @GetMapping
     public String main (Model model,
@@ -33,6 +36,7 @@ public class MainController {
         data.put("messages", messageRepository.findAll());
 
         model.addAttribute("frontendData", data);
+        model.addAttribute("isDevMode", "dev".equals(profile));
         return "index";
     }
 }
