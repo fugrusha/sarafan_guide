@@ -1,13 +1,25 @@
 <template>
-    <div>
-    <div v-if="!profile">Please login via
-        <a href="/login">Google</a>
-    </div>
-    <div v-else>
-        <div>{{profile.name}}&nbsp;<a href="/logout">Log out</a></div>
-        <messages-list :messages="messages" />
-    </div>
-    </div>
+    <v-app>
+        <v-app-bar app>
+            <v-toolbar-title>Sarafan</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <span v-if="profile">{{profile.name}}</span>
+            <v-btn v-if="profile" icon href="/logout">
+                <v-icon>exit_to_app</v-icon>
+            </v-btn>
+        </v-app-bar>
+
+        <v-content>
+            <v-container v-if="!profile">Please login via
+                <a href="/login">Google</a>
+            </v-container>
+            <v-container v-if="profile">
+                <messages-list :messages="messages" />
+            </v-container>
+
+        </v-content>
+
+    </v-app>
 </template>
 
 <script>

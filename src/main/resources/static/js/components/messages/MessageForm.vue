@@ -1,9 +1,12 @@
 <template>
 
-    <div>
-        <input type="text" placeholder="You can share something" v-model="text" />
-        <input type="button" value="Save" @click="save" />
-    </div>
+    <v-layout row>
+        <v-text-field
+                label="New Message"
+                placeholder="You can share something"
+                v-model="text" />
+        <v-btn @click="save">Send</v-btn>
+    </v-layout>
 
 </template>
 
