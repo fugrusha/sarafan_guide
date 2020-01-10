@@ -23,4 +23,13 @@ public class Message {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     @JsonView(Views.FullMessage.class)
     private LocalDateTime creationDate;
+
+    @JsonView(Views.FullMessage.class)
+    private String link;
+    @JsonView(Views.FullMessage.class)
+    private String linkTitle;
+    @JsonView(Views.FullMessage.class)
+    private String linkDescription;
+    @JsonView(Views.FullMessage.class)
+    private String linkCover;
 }
