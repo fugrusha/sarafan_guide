@@ -1,8 +1,9 @@
 package com.social.sarafan.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,10 +12,17 @@ import java.util.List;
 @Entity
 @Table
 @Data
+@ToString(of = {"id", "text"})
+@EqualsAndHashCode(of = {"id"})
+@JsonIdentityInfo(
+        property = "id",
+        generator = ObjectIdGenerators.IntSequenceGenerator.class
+)
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(Views.Id.class)
+    @JsonProperty("id")
     private Long id;
 
     @JsonView(Views.IdName.class)

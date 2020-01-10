@@ -1,5 +1,5 @@
 <template>
-    <v-container v-if="!profile">Please login via
+    <v-container>Please login via
         <a href="/login">Google</a>
     </v-container>
 </template>
