@@ -4,7 +4,9 @@
         <v-text-field
                 label="New Message"
                 placeholder="You can share something"
-                v-model="text" />
+                v-model="text"
+                @keyup.enter="save"
+        />
         <v-btn @click="save">Send</v-btn>
     </v-layout>
 
