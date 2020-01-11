@@ -15,7 +15,7 @@
         </v-app-bar>
 
         <v-content class="mx-auto"
-                   max-width="800">
+                   max-width="600">
             <router-view></router-view>
         </v-content>
 
