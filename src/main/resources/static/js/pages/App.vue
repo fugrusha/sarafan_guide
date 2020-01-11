@@ -23,7 +23,7 @@
 
 <script>
     import { mapState, mapMutations } from 'vuex'
-    import { addHandler } from '../util/ws'
+    import { addHandler } from 'util/ws'
 
     export default {
         computed: mapState(['profile']),
@@ -42,7 +42,7 @@
             }
         },
         created() {
-            addHandler( data => {
+            addHandler(data => {
                 if (data.objectType === 'MESSAGE') {
                     switch (data.eventType) {
                         case 'CREATE':
@@ -55,7 +55,7 @@
                             this.removeMessageMutation(data.body)
                             break
                         default:
-                            console.error(`Looks like the eventType is unknown "${data.eventType}"`)
+                            console.error(`Looks like the event type if unknown "${data.eventType}"`)
                     }
                 } else if (data.objectType === 'COMMENT') {
                     switch (data.eventType) {
@@ -63,10 +63,10 @@
                             this.addCommentMutation(data.body)
                             break
                         default:
-                            console.error(`Looks like the eventType is unknown "${data.eventType}"`)
+                            console.error(`Looks like the event type if unknown "${data.eventType}"`)
                     }
                 } else {
-                    console.error(`Looks like the objectType is unknown "${data.objectType}"`)
+                    console.error(`Looks like the object type if unknown "${data.objectType}"`)
                 }
             })
         },

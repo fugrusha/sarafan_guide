@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import MessagesList from '../pages/MessageList.vue'
-import Auth from '../pages/Auth.vue'
-import Profile from '../pages/Profile.vue'
+import MessagesList from 'pages/MessageList.vue'
+import Auth from 'pages/Auth.vue'
+import Profile from 'pages/Profile.vue'
 
 Vue.use(VueRouter)
 

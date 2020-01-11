@@ -31,7 +31,6 @@
 
 <script>
     import profileApi from 'api/profile'
-
     export default {
         name: 'Profile',
         data() {
@@ -63,10 +62,8 @@
             },
             async updateProfile() {
                 const id = this.$route.params.id || this.$store.state.profile.id
-
                 const data = await profileApi.get(id)
                 this.profile = await data.json()
-
                 this.$forceUpdate()
             }
         },
