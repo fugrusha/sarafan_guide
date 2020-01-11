@@ -127,6 +127,7 @@ public class MessageService {
     public MessagePageDTO findForUser(Pageable pageable, User user) {
         List<User> channels = userSubscriptionRepository.findBySubscriber(user)
                 .stream()
+                .filter(UserSubscription::isActive)
                 .map(UserSubscription::getChannel)
                 .collect(Collectors.toList());
 
