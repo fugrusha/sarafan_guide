@@ -1,21 +1,23 @@
 <template>
-    <v-card class="my-2">
-        <v-card-text class="text--primary">
+    <v-card class="my-5">
             <user-link
                     :user="message.author"
                     size="48"
             ></user-link>
-            <div class="pt-3">
-                {{ message.text }}
-            </div>
-        </v-card-text>
-        <media v-if="message.link" :message="message"></media>
-        <v-card-actions>
-            <v-btn value="Edit" @click="edit" small text rounded>Edit</v-btn>
-            <v-btn icon @click="del" small>
-                <v-icon>delete</v-icon>
-            </v-btn>
-        </v-card-actions>
+        <v-list-item>
+            <v-card-text class="headline">
+                    {{ message.text }}
+            </v-card-text>
+            <media v-if="message.link" :message="message"></media>
+            <v-row align="center" justify="end">
+                <v-card-actions>
+                    <v-btn value="Edit" @click="edit" small text rounded>Edit</v-btn>
+                    <v-btn icon @click="del" small>
+                        <v-icon>delete</v-icon>
+                    </v-btn>
+                </v-card-actions>
+            </v-row>
+        </v-list-item>
         <comment-list
                 :comments="message.comments"
                 :message-id="message.id"

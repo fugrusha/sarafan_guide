@@ -1,0 +1,13 @@
+package com.social.sarafan.repository;
+
+import com.social.sarafan.domain.User;
+import com.social.sarafan.domain.UserSubscription;
+import com.social.sarafan.domain.UserSubscriptionId;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface UserSubscriptionRepository extends JpaRepository<UserSubscription, UserSubscriptionId> {
+
+    List<UserSubscription> findBySubscriber(User user);
+}
