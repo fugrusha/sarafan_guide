@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.social.sarafan.domain.User;
 import com.social.sarafan.domain.Views;
 import com.social.sarafan.dto.MessagePageDTO;
+import com.social.sarafan.repository.UserDetailsRepository;
 import com.social.sarafan.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,15 +27,22 @@ import static com.social.sarafan.controller.MessageController.MESSAGES_PER_PAGE;
 public class MainController {
 
     private final MessageService messageService;
-    private final ObjectWriter writer;
+    private final ObjectWriter messageWriter;
+    private final ObjectWriter profileWriter;
+    private final UserDetailsRepository userDetailsRepository;
 
     @Autowired
-    public MainController(MessageService messageService, ObjectMapper mapper) {
+    public MainController(MessageService messageService, ObjectMapper mapper, UserDetailsRepository userDetailsRepository) {
         this.messageService = messageService;
+        this.userDetailsRepository = userDetailsRepository;
 
-        this.writer = mapper
-                .setConfig(mapper.getSerializationConfig())
+        ObjectMapper objectMapper = mapper
+                .setConfig(mapper.getSerializationConfig());
+
+        this.messageWriter = objectMapper
                 .writerWithView(Views.FullMessage.class);
+        this.profileWriter = objectMapper
+                .writerWithView(Views.FullProfile.class);
     }
 
     @Value("${spring.profiles.active}")
@@ -49,19 +57,22 @@ public class MainController {
         HashMap<Object, Object> data = new HashMap<>();
 
         if (user != null) {
-            data.put("profile", user);
+            User userFromDB = userDetailsRepository.findById(user.getId()).get();
+            String serializedProfile = profileWriter.writeValueAsString(userFromDB);
+            model.addAttribute("profile", serializedProfile);
 
             Sort sort = Sort.by(Sort.Direction.DESC, "id");
             PageRequest pageRequest = PageRequest.of(0, MESSAGES_PER_PAGE, sort);
             MessagePageDTO messagePageDTO = messageService.findAll(pageRequest);
 
-            String messages = writer.writeValueAsString(messagePageDTO.getMessages());   // send as string text, no object
+            String messages = messageWriter.writeValueAsString(messagePageDTO.getMessages());   // send as string text, no object
 
             model.addAttribute("messages", messages);
             data.put("currentPage", messagePageDTO.getCurrentPage());
             data.put("totalPages", messagePageDTO.getTotalPages());
         } else {
             model.addAttribute("messages", "[]");
+            model.addAttribute("profile", "null");
         }
 
         model.addAttribute("frontendData", data);

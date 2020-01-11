@@ -8,10 +8,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         messages,
+        profile,
         ...frontendData
     },
     getters: {
-        sortedMessages: state => (state.messages || [] ).sort((a, b) => -(a.id - b.id))
+        sortedMessages: state => (state.messages || []).sort((a, b) => -(a.id - b.id))
     },
     mutations: {
         addMessageMutation(state, message) {
@@ -59,11 +60,11 @@ export default new Vuex.Store({
         },
         addMessagePageMutation(state, messages) {
             const targetMessages = state.messages
-                    .concat(messages)
-                    .reduce((res, val) => {
-                        res[val.id] = val
-                        return res
-                    }, {})
+                .concat(messages)
+                .reduce((res, val) => {
+                    res[val.id] = val
+                    return res
+                }, {})
 
             state.messages = Object.values(targetMessages)
         },
