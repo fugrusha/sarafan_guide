@@ -6,7 +6,7 @@
                 Messages
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn text v-if="profile" :disabled="$route.path === '/profile'" @click="showProfile">
+            <v-btn text v-if="profile" :disabled="$route.path === '/user'" @click="showProfile">
                 {{profile.name}}
             </v-btn>
             <v-btn v-if="profile" icon href="/logout">
@@ -14,7 +14,8 @@
             </v-btn>
         </v-app-bar>
 
-        <v-content>
+        <v-content class="mx-auto"
+                   max-width="800">
             <router-view></router-view>
         </v-content>
 
@@ -23,7 +24,7 @@
 
 <script>
     import { mapState, mapMutations } from 'vuex'
-    import { addHandler } from '../util/ws'
+    import { addHandler } from 'util/ws'
 
     export default {
         computed: mapState(['profile']),
@@ -38,11 +39,11 @@
                 this.$router.push('/')
             },
             showProfile() {
-                this.$router.push('/profile')
+                this.$router.push('/user')
             }
         },
         created() {
-            addHandler( data => {
+            addHandler(data => {
                 if (data.objectType === 'MESSAGE') {
                     switch (data.eventType) {
                         case 'CREATE':
@@ -55,7 +56,7 @@
                             this.removeMessageMutation(data.body)
                             break
                         default:
-                            console.error(`Looks like the eventType is unknown "${data.eventType}"`)
+                            console.error(`Looks like the event type if unknown "${data.eventType}"`)
                     }
                 } else if (data.objectType === 'COMMENT') {
                     switch (data.eventType) {
@@ -63,10 +64,10 @@
                             this.addCommentMutation(data.body)
                             break
                         default:
-                            console.error(`Looks like the eventType is unknown "${data.eventType}"`)
+                            console.error(`Looks like the event type if unknown "${data.eventType}"`)
                     }
                 } else {
-                    console.error(`Looks like the objectType is unknown "${data.objectType}"`)
+                    console.error(`Looks like the object type if unknown "${data.objectType}"`)
                 }
             })
         },
