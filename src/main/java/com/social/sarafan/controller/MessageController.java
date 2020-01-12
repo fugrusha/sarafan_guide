@@ -37,11 +37,13 @@ public class MessageController {
     }
 
     @GetMapping("/{id}")
+    @JsonView(Views.FullMessage.class)
     public Message getMessage(@PathVariable("id") Message message) {
         return message;
     }
 
     @PostMapping
+    @JsonView(Views.FullMessage.class)
     public Message createMessage(
             @RequestBody Message message,
             @AuthenticationPrincipal User user
@@ -50,6 +52,7 @@ public class MessageController {
     }
 
     @PutMapping("/{id}")
+    @JsonView(Views.FullMessage.class)
     public Message updateMessage(
             @PathVariable("id") Message msgFromDB,   // get from DB via id
             @RequestBody Message message             // get from user's updated as json

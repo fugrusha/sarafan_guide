@@ -1,5 +1,5 @@
 <template>
-    <v-list_item>
+    <v-list-item>
         <router-link
                 :to="`/user/${user.id}`"
 
@@ -25,7 +25,7 @@
             {{ userName }}
             </span>
         </router-link>
-    </v-list_item>
+    </v-list-item>
 
 </template>
 

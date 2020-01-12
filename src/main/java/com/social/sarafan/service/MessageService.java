@@ -15,7 +15,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,7 +48,7 @@ public class MessageService {
     ) {
         this.messageRepository = messageRepository;
         this.userSubscriptionRepository = userSubscriptionRepository;
-        this.wsSender = wsSender.getSender(ObjectType.MESSAGE, Views.IdName.class);
+        this.wsSender = wsSender.getSender(ObjectType.MESSAGE, Views.FullMessage.class);
     }
 
 
@@ -102,10 +101,10 @@ public class MessageService {
     }
 
     public Message update(Message msgFromDB, Message message) throws IOException {
-        // copy from message to msgFromDB all props except id
-        BeanUtils.copyProperties(message, msgFromDB, "id");
+        // copy text from message to msgFromDB
+        msgFromDB.setText(message.getText());
         fillMeta(msgFromDB);
-        Message updatedMessage = messageRepository.save(message);
+        Message updatedMessage = messageRepository.save(msgFromDB);
 
         wsSender.accept(EventType.UPDATE, updatedMessage);
 
