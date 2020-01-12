@@ -45,7 +45,7 @@ public class MainController {
                 .writerWithView(Views.FullProfile.class);
     }
 
-    @Value("${spring.profiles.active}")
+    @Value("${spring.profiles.active:prod}")
     private String profile;
 
     @GetMapping
